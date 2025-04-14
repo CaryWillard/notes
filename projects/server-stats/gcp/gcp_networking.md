@@ -267,3 +267,92 @@ Options for connecting your VPC to other networks in your system.
 - Carrier Peering gives you direct access from your on-premises network through a service provider's network to Google Workspace and to Google cloud products that can be exposed through one or more public IP addresses
 - Note: Peering isn't covered by a Google SLA
 
+### Dedicated Interconnect
+
+- One or more direct, private connections to Google
+- Highest uptimes. Can be covered by a 99.99% SLA
+- Can use a VPN as a backup for even greater reliability
+
+### Partner Interconnect
+
+Useful if:
+
+- Your data center cannot reach a Dedicated Interconnect colocation
+- The data needs don't warrant an entire 10 Gbps connection
+
+## Cloud VPN
+
+- Uses and IPsec VPN connection
+- Traffic traveling between the networks is encrypted by one VPN gateway and decrypted by the other VPN gateway
+- Google Cloud offers two types of Cloud VPN gateways: HA VPN and Classic VPN
+
+### HA VPN
+
+- High Availability
+- Single region
+- Site-to-site VPN
+- Useful for connecting your on-premises network to your VPC
+
+##### Two peer VPN devices
+
+### Class VPN
+
+- Unlike HA VPN, Classic VPN gateways have a single interface, a single external IP address, and support tunnels that use static routing (policy-based or route-based)
+- All Cloud VPN gateways created before the introduction of HA VPN are considered Classic VPN gateways
+
+> Choose a Cloud VPN gateway that uses dynamic routing and the Border Gateway Protocol (BGP). To the achieve the highest level of availability, use HA VPN whenever possible.
+
+### VPN Topology
+
+- In order to connect two VPN gateways, they must establish a pair of tunnels. Each tunnel is a connection originating from one of the gateways and terminating at the other. This is how bi-directional traffic flow is established.
+- A Cloud VPN Gateway in one region can communicate with other Regions on the same VPC
+- VPN Maximum Transmission Unit (MTU): 1460 bytes
+  - Maximum Transmission Unit (MTU): the size of the largest protocol data unit (PDU) that can be communicated in a single network layer transaction
+  - Larger MTU: less overhead
+  - Smaller MTU: less network delay
+  - Standard ethernet supports an MTU of 1500 bytes
+  - Ethernet implementation supporting jumbo frames allow for an MTU up to 9000 bytes
+  - Border protocols like Point-to-Point Protocol over Ethernet (PPPoE) will reduce this
+
+HA VPN supports the following recommended topologies or configuration scenarios
+
+- HA VPN to peer VPN gateways
+- HA VPN to AWS peer gateways
+- HA VPN between Google Cloud networks
+
+### Topologies for HA VPN to peer VPN gateways
+
+#### Two peer VPN devices
+
+An HA VPN gateway connects to two separate peer VPN devices, each with its own IP address. Having a second peer-side gateway provides redundancy and failover on that side of the connection.
+
+#### One peer VPN devices with two IP addresses
+
+One HA VPN gateway connects to one peer device that has two separate external IP addresses. The HA VPN gateway uses two tunnels, one tunnel to each external IP address on the peer device.
+
+## Dynamic Routing with Google Cloud Router
+
+- In order to use dynamic routes with Cloud VPN, you need to configure Cloud Routers.
+- Cloud Router uses BGP. Your on-premises VPN gateway must also support BGP.
+- This routing method allows for routes to be updated and exchanged without changing the tunnel configuration.
+- As you add subnets, they are seamlessly advertised between networks
+
+> To make configuration of IAM roles and permission easier, wherever possible, keep you Cloud VPN and Cloud Router resources in a project separate from your other Google cloud resources.
+
+## Cloud Interconnect and Peering
+
+| Network Layer | Dedicated              | Shared               |
+|---------------|------------------------|----------------------|
+| Layer 3       | Direct Peering         | Carrier Peering      |
+| Layer 2       | Dedicated Interconnect | Partner Interconnect |
+
+- Layer 3 connections provide access to Google Workspace services, YouTube, and Google Cloud APIs using public IP addresses
+- Layer 2 connections use a VLAN that pipes directly into your Google Cloud environment, providing connectivity to internal IP addresses in the RFC 1918 address space.
+
+### Cloud Interconnect
+
+Google Cloud Interconnect sets up a physical connection between your on-premises infrastructure, Google Cloud, and other resources.
+
+### Google Cloud peering services
+
+Direct Peering and Carrier Peering services are useful when you require access to Google and Google Cloud properties. Let's examine each one.

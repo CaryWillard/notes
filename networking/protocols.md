@@ -37,6 +37,14 @@ AKA
 * Reservation
 * MAC/IP address binding
 
+## DSL
+
+- Digital Subscriber Line
+- Purpose: A family of technologies that are used to transmit digital data over telephone lines
+- Frequently understood to mean Asymmetric Digital Subscriber Line (ADSL) which is the most commonly installed DSL technology for internet access
+  - ADSL: upstream throughput (to the ISP) is lower than downstream (to the subscriber)
+- Works simultaneously with wired telephone service because DSL uses higher frequencies than telephone. A (physical) DSL filter is required.
+
 ## ICMP
 
 * Internet Control Message Protocol
@@ -62,6 +70,21 @@ AKA
   - host-to-host
   - network-to-network
   - network-to-host
+
+### PPP
+
+- [Point-to-Point Protocol](https://en.wikipedia.org/wiki/Point-to-Point_Protocol)
+- Purpose: communication between two routers directly without any intermediate networking
+- Features: loop detection, authentication, transmission encryption, data compression
+- Data Link Layer (layer 2)
+- Since IP packets cannot be transmitted over a modem line on their own without some data link protocol that can identify where the transmitted frame starts and ends, ISPs have used PPP for customer dial-up access to the internet.
+
+## PPPoE
+
+- Point-to-Point Protocol over Ethernet
+- Purpose: Encaupsulating Point-to-Point Protocol frames inside Ethernet Frames. Used for Digital Subscriber Line (DSL)
+- Network layer
+- Frequently used on former dial-up networking lines to supply DSL
 
 ## RDP
 
